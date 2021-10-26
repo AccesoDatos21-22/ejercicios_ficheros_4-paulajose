@@ -100,14 +100,14 @@ class Main {
             for (Medicamento med : lista) {
 				System.out.println(med.toString());
 			}
-		/*	System.out.println("Introduzca el código del medicamento que desea buscar:");
+			System.out.println("Introduzca el código del medicamento que desea buscar:");
 			num = Integer.parseInt(sc.nextLine());
 			System.out.println(ma.buscar(num).toString());
 
 			System.out.println("Introduzca el código del medicamento que desea actualizar:");
 			num = Integer.parseInt(sc.nextLine());
 			ma.actualizar(lista.get(num-1));
-			System.out.println(ma.buscar(num).toString());*/
+			System.out.println(ma.buscar(num).toString());
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
