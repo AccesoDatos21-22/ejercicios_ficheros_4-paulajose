@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,6 +24,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import dao.MedicamentoAleatorio;
+import modelo.Medicamento;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,6 +50,69 @@ class Main {
 	private static final String DOM_XML_FILE = "xml/EmpleadosDOM.xml";
 
 	public static void main(String[] args) {
+
+        Scanner sc;
+        List<Medicamento> lista;
+        int cant, cod, stock, stockMax, stockMin, codProv;
+        String nom;
+        double pre;
+		MedicamentoAleatorio ma;
+		int num;
+
+        try {
+            sc = new Scanner(System.in);
+            lista = new ArrayList<Medicamento>();
+			ma = new MedicamentoAleatorio();
+
+            System.out.println("¿Cuántos medicamentos desea añadir?");
+            cant = Integer.parseInt(sc.nextLine());
+
+            for (int i=0; i<cant; i++) {
+                System.out.println("Medicamento nº "+(i+1));
+                System.out.println("Introduzca el nombre del medicamento:");
+                nom = sc.nextLine();
+                while (nom.length()>50) {
+                    System.out.println("Caracteres máximos 50. Introduzca el nombre del medicamento:");
+                    nom = sc.nextLine();
+                }
+                System.out.println("Introduzca el precio del medicamento:");
+                pre = Double.parseDouble(sc.nextLine());
+                if (lista.isEmpty()) {
+                    cod = 1;
+                }
+                else {
+                    cod = lista.size()+1;
+                }
+                System.out.println("Introduzca el stock del medicamento:");
+                stock = Integer.parseInt(sc.nextLine());
+                System.out.println("Introduzca el stock máximo del medicamento:");
+                stockMax = Integer.parseInt(sc.nextLine());
+                System.out.println("Introduzca el stock mínimo del medicamento:");
+                stockMin = Integer.parseInt(sc.nextLine());
+                System.out.println("Introduzca el código de proveedor del medicamento:");
+                codProv = Integer.parseInt(sc.nextLine());
+                System.out.println("--------------------------------------------------");
+
+                Medicamento med = new Medicamento(nom, pre, cod, stock, stockMax, stockMin, codProv);
+                lista.add(med);
+				ma.guardar(med);
+			}
+            for (Medicamento med : lista) {
+				System.out.println(med.toString());
+			}
+		/*	System.out.println("Introduzca el código del medicamento que desea buscar:");
+			num = Integer.parseInt(sc.nextLine());
+			System.out.println(ma.buscar(num).toString());
+
+			System.out.println("Introduzca el código del medicamento que desea actualizar:");
+			num = Integer.parseInt(sc.nextLine());
+			ma.actualizar(lista.get(num-1));
+			System.out.println(ma.buscar(num).toString());*/
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 		// ejemploJaxb();
 		// ejemploEscribirDOM();
 		// ejemploLeerDOM();
