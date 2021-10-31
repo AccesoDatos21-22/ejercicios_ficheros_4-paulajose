@@ -14,26 +14,30 @@ public class Farmacia implements MedicamentoDAO {
 
 	}
 
+	public Farmacia(List<Medicamento> listaMedic){
+		this.medicamentos = listaMedic;
+	}
+
 	@Override
 	public boolean guardar(Medicamento medicamento) {
+
+		medicamentos.add(medicamento);
 
 		return false;
 	}
 
 	@Override
 	public boolean borrar(Medicamento medicamento) {
-
 		return false;
 	}
 
 	@Override
 	public List<Medicamento> leerTodos() {
-
-		return null;
+		return medicamentos;
 	}
 
 	@Override
-	public Medicamento buscar(String nombre) {
+	public List<Medicamento> buscar(String nombre) {
 		return null;
 	}
 

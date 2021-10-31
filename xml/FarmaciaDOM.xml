@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Medicamentos>
+    <medicamento>
+        <nombre>paracetamol</nombre>
+        <codigo>1</codigo>
+        <precio>6.447999994456768</precio>
+        <stock>25</stock>
+        <Stock_Maximo>30</Stock_Maximo>
+        <tock_Minimo>15</tock_Minimo>
+        <codigo_proveedor>1</codigo_proveedor>
+    </medicamento>
+    <medicamento>
+        <nombre>ibuprofeno</nombre>
+        <codigo>2</codigo>
+        <precio>3.639999996870756</precio>
+        <stock>15</stock>
+        <Stock_Maximo>30</Stock_Maximo>
+        <tock_Minimo>0</tock_Minimo>
+        <codigo_proveedor>12</codigo_proveedor>
+    </medicamento>
+    <medicamento>
+        <nombre>paracetamol</nombre>
+        <codigo>3</codigo>
+        <precio>9.359999991953373</precio>
+        <stock>25</stock>
+        <Stock_Maximo>30</Stock_Maximo>
+        <tock_Minimo>20</tock_Minimo>
+        <codigo_proveedor>123</codigo_proveedor>
+    </medicamento>
+</Medicamentos>

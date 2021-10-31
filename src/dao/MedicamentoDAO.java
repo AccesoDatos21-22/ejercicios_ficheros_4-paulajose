@@ -10,7 +10,7 @@ public interface MedicamentoDAO {
 	
 	public boolean guardar(Medicamento medicamento);
 	
-	public Medicamento buscar(String nombre);
+	public List<Medicamento> buscar(String nombre);
 
 	public boolean actualizar(Medicamento medicamento);
 	

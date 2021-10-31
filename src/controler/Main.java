@@ -1,6 +1,6 @@
 package controler;
 
- import java.io.File;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,6 +24,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import dao.FarmaciaDOM;
+import dao.MedicamentoAleatorio;
+import modelo.*;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -39,18 +44,16 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
-import modelo.Empleado;
-import modelo.Empresa;
-import modelo.NoExisteTrabajador;
-import modelo.Trabajador;
 
 public class Main {
 
-  private static final String JAXB_XML_FILE = "xml/EmpresaJAXB.xml";
-	private static final String XSTREAM_XML_FILE = "xml/EmpresaXTREAM.xml";
-	private static final String DOM_XML_FILE = "xml/EmpleadosDOM.xml";
+    private static final String JAXB_XML_FILE = "xml/EmpresaJAXB.xml";
+    private static final String XSTREAM_XML_FILE = "xml/EmpresaXTREAM.xml";
+    private static final String DOM_XML_FILE = "xml/EmpleadosDOM.xml";
 
-  private static void ejemploLeerDOM() {
+    static Scanner sc = new Scanner(System.in);
+
+ /* private static void ejemploLeerDOM() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		DocumentBuilder builder;
@@ -267,31 +270,125 @@ private static void ejemploEscribirXSTREAM() {
 		} catch (JAXBException | IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
-  public static void testTrabajadorDAOImp(){
-   	TrabajadorDAOImp ficheroAleatorio = new TrabajadorDAOImp();
-		Trabajador emp = new Trabajador(3,1,1000.0,"Pepito ");
-		Trabajador emp2 = new Trabajador();
-		ficheroAleatorio.insertar(emp);
-		try {
-			emp2 = ficheroAleatorio.leer(3);
-		} catch (NoExisteTrabajador e) {
-			System.err.println(e.getMessage());
-		}
+   /* public static void testTrabajadorDAOImp() {
+        TrabajadorDAOImp ficheroAleatorio = new TrabajadorDAOImp();
+        Trabajador emp = new Trabajador(3, 1, 1000.0, "Pepito ");
+        Trabajador emp2 = new Trabajador();
+        ficheroAleatorio.insertar(emp);
+        try {
+            emp2 = ficheroAleatorio.leer(3);
+        } catch (NoExisteTrabajador e) {
+            System.err.println(e.getMessage());
+        }
 
-		System.out.println(emp2);
+        System.out.println(emp2);
 
-  }
+    }*/
 
-	public static void main(String[] args) {
-  	// testTrabajadorDAOImp();
-     ejemploJaxb();
-     ejemploEscribirDOM();
-	 ejemploLeerDOM();
-		
-	 ejemploEscribirXSTREAM();
-  	 ejemploLeerXSTREAM();
-	}
+    public static void main(String[] args) {
 
+//***************************************Ejercicios ficheros aleatorios
+
+        List<Medicamento> listBuscados = new ArrayList<>();
+        List<Medicamento> listMedicamentos = new ArrayList<>();
+        MedicamentoAleatorio MedAleatorio = new MedicamentoAleatorio();
+
+        System.out.println("¿Cuánntos medicamentos quiere añadir?");
+        int cant = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < cant; i++) {
+            System.out.println("\nVas a introducir los datos del medicamento " + (i + 1));
+
+            Medicamento medicamento = anadirMedicamento();
+            listMedicamentos.add(medicamento);
+            MedAleatorio.guardar(medicamento);
+        }
+
+        System.out.println("\nIntroduzca el nombre del medicamento que quiere buscar: ");
+        String nombre = sc.nextLine();
+
+        listBuscados = MedAleatorio.buscar(nombre);
+
+        System.out.println("\n----->> Medicamentos soliticados <<-----");
+
+        for (Medicamento med : listBuscados) {
+
+            System.out.println(med);
+
+        }
+
+        System.out.print("\nIntroduce el código del medicamento que quiere borrar: ");
+        int codigo = sc.nextInt();
+
+        if (listMedicamentos.size() <= codigo - 1)
+            for (Medicamento m : listMedicamentos)
+                if (m.getCod() == codigo)
+                    MedAleatorio.borrar(m);
+                else
+                    System.err.println("El codigo del medicamento introducido no es correcto");
+
+        //********************************Ejercicios 4XML DOM
+
+       /* FarmaciaDOM farmaciaDOM = new FarmaciaDOM();
+
+        List<Medicamento> listFarmacia = new ArrayList<>();
+        Farmacia farmacia1 = new Farmacia(listFarmacia);
+
+        System.out.println("¿Cuántos medicamentos quiere añadir a la farmacia?");
+        int cant = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < cant; i++) {
+            System.out.println("\nVa a introducir los datos para el medicamento " + (i + 1));
+            Medicamento medicamentoFar = anadirMedicamento();
+            farmacia1.guardar(medicamentoFar);
+        }
+
+        farmaciaDOM.guardar(farmacia1);*/
+
+
+        // ejemploJaxb();
+        // ejemploEscribirDOM();
+        // ejemploLeerDOM();
+        // ejemploEscribirXSTREAM();
+        // ejemploLeerXSTREAM();
+    }
+
+    public static Medicamento anadirMedicamento() {
+
+        System.out.print("Nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Precio: ");
+        Double precio = sc.nextDouble();
+
+        System.out.print("Stock máximo: ");
+        int stockMax = sc.nextInt();
+
+        System.out.print("Stock mínimo: ");
+        int stockMin = sc.nextInt();
+
+        System.out.print("Stock: ");
+        int stock = sc.nextInt();
+
+        System.out.print("Código de proveedor: ");
+        int codProveedor = sc.nextInt();
+
+        sc.nextLine();
+
+        Medicamento med = new Medicamento(nombre, precio, stock, stockMax, stockMin, codProveedor);
+
+        return med;
+
+    }
+
+
+    // testTrabajadorDAOImp();
+    // ejemploJaxb();
+    //ejemploEscribirDOM();
+    //ejemploLeerDOM();
+
+    // ejemploEscribirXSTREAM();
+    //ejemploLeerXSTREAM();
 }
