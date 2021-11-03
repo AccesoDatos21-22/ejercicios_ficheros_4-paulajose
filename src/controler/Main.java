@@ -331,7 +331,7 @@ private static void ejemploEscribirXSTREAM() {
 
         //********************************Ejercicios 4XML DOM
 
-       /* FarmaciaDOM farmaciaDOM = new FarmaciaDOM();
+        FarmaciaDOM farmaciaDOM = new FarmaciaDOM();
 
         List<Medicamento> listFarmacia = new ArrayList<>();
         Farmacia farmacia1 = new Farmacia(listFarmacia);
@@ -345,7 +345,12 @@ private static void ejemploEscribirXSTREAM() {
             farmacia1.guardar(medicamentoFar);
         }
 
-        farmaciaDOM.guardar(farmacia1);*/
+        farmaciaDOM.guardar(farmacia1);
+	    
+	System.out.println("\n-----> Medicamentos de la farmacia <-----");
+
+        Path path = Paths.get("xml/FarmaciaDOM.xml");
+        farmaciaDOM.leer(path);
 
 
         // ejemploJaxb();
