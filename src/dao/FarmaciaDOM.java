@@ -32,10 +32,47 @@ public class FarmaciaDOM {
 
 	public boolean leer(Path farmaciaXML) {
 
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		return false;
+        DocumentBuilder builder;
 
-	}
+        try {
+
+            builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new File(DOM_XML_FILE));
+            document.getDocumentElement().normalize();
+
+            NodeList medicamentos = document.getElementsByTagName("medicamento");
+
+            for (int i = 0; i < medicamentos.getLength(); i++) {
+
+                Node med = medicamentos.item(i);
+
+                if (med.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elemento = (Element) med;
+                    System.out.println("Nombre: " + getNode("nombre", elemento));
+                    System.out.println("Código: " + getNode("codigo", elemento));
+                    System.out.println("Precio: " + getNode("precio", elemento));
+                    System.out.println("Stock: " + getNode("stock", elemento));
+                    System.out.println("Stock máximo: " + getNode("Stock_Maximo", elemento));
+                    System.out.println("Stock mínimo: " + getNode("Stock_Minimo", elemento));
+                    System.out.println("Código de proveedor: " + getNode("codigo_proveedor", elemento));
+
+                }
+
+            }
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
 
 	/**
 	 * Guarda los medicamentos de la farmacia en un fichero XML
